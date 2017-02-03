@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Game Of Life</title>
+	<link rel="stylesheet" href="bootstrap.min.css">
+	<script type="text/javascript" src="mechanics.js"></script>
+
+	<style type="text/css">
+		.cell{
+			width: 25px;
+		}
+
+		.live{
+			background-color: grey;
+		}
+
+		.centerBlock {
+			display: table;
+			margin: auto;
+		}
+	</style>
+
+</head>
+<body>
+	<div class="col-md-6 col-md-offset-3">
+		<h1>Welcome to the Game Of Life</h1>
+		<br><br>
+		<div class="container col-md-12">
+			<div class="col-md-4">
+				<div class="input-group">
+					<span class="input-group-addon">Width&nbsp; </span>
+					<input class="form-control" type="number" name="x" id="x">
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="input-group">
+					<span class="input-group-addon">Height</span>
+					<input class="form-control" type="number" name="y" id="y">
+				</div>
+			</div>
+			<div class="col-md-3">
+				<button class="btn btn-default" onclick="generate()" style="width: 60px">Make</button>
+				<button class="btn btn-default" onclick="updateState()" style="width: 60px">Next</button>
+			</div>
+		</div>
+		<br><br><br>
+		<div class="container col-md-12">
+			<div class="col-md-8">
+				<div class="input-group">
+					<span class="input-group-addon">Play Speed(iterations/sec)</span>
+					<input class="form-control" type="number" id="playspeed">
+				</div>
+			</div>
+			<div class="col-md-3">
+				<button class="btn btn-default" onclick="play()" style="width: 60px">Play</button>
+				<button class="btn btn-default" onclick="stop()" style="width: 60px">Stop</button>
+			</div>
+		</div>		
+	</div>
+	<div class="col-md-12">
+		<div id="container" class="centerBlock">
+			
+		</div>
+	</div>
+</body>
+</html>
