@@ -1,8 +1,14 @@
+/*
+	State Vars
+*/
 var xdim, ydim;
 var cell_width, cell_height;
 var player;
 var playing = false;
 
+/*
+	Regenerates grid based on size configuration
+*/
 function generate(){
 	var x = document.getElementById('x').value;
 	var y = document.getElementById('y').value;
@@ -30,6 +36,9 @@ function generate(){
 	c.innerHTML = str;
 }
 
+/*
+	Toggles cell state
+*/
 function toggle(x){
 	var cell = document.getElementById(x);
 	if(cell.classList.contains('live')){
@@ -40,6 +49,9 @@ function toggle(x){
 	}
 }
 
+/*
+	Gets current state matrix
+*/
 function currentState(){
 	var currState = [];
 
@@ -72,6 +84,9 @@ function currentState(){
 	return currState;
 }
 
+/*	
+	Returns live neighbor count
+*/
 function liveNeighbourCount(currState, x, y){
 	var xoffsets = [-1, -1, -1,  0,  0, +1, +1, +1];
 	var yoffsets = [-1,  0, +1, -1, +1, -1,  0, +1];
@@ -85,15 +100,16 @@ function liveNeighbourCount(currState, x, y){
 	return count;
 }
 
+/*
+	Formulates next state matrix
+*/
 function genNextState(currState){
 	var nextState = currState.map(function(arr) {
     	return arr.slice();
 	});
 
-	var i,j;
-	for(i=1;i<=xdim;i++){
-		for(j=1;j<=ydim;j++){
-			
+	for(var i=1;i<=xdim;i++){
+		for(var j=1;j<=ydim;j++){
 			var newval = 0;
 			var neighbors = liveNeighbourCount(currState, i, j);
 
@@ -109,19 +125,24 @@ function genNextState(currState){
 	return nextState;
 }
 
+/*
+	Updates board state
+*/
 function updateState(){
 	var currState = currentState();
 	var nextState = genNextState(currState); 
 
-	for(i=1;i<=xdim;i++)
+	for(i=1;i<=xdim;i++){
 		for(j=1;j<=ydim;j++){
 			if(currState[i][j] == 1) 	document.getElementById(i + "," + j).className = "cell";
 			if(nextState[i][j] == 1)	document.getElementById(i + "," + j).className = "cell live";
-
-			// document.getElementById(i + "," + j).innerHTML = nextState[i][j];
-		}
+		}		
+	}
 }
 
+/*
+	Starts playing the board
+*/
 function play(){
 	var speed = document.getElementById('playspeed').value;
 	var delay = 1000.0/speed;
@@ -130,10 +151,16 @@ function play(){
 	player = setInterval(updateState, delay);
 }
 
+/*
+	Stops playing the board
+*/
 function stop(){
 	clearInterval(player);
 }
 
+/*
+	Toggles Play/Stop
+*/
 function play_toggle(){
 	if(playing){
 		playing = false;
@@ -147,6 +174,9 @@ function play_toggle(){
 	}
 }
 
+/*
+	Randomly initializes the board
+*/
 function randomize(){
 	for(var idx=1; idx<=xdim; idx++)
 		for(var idy=1; idy<=ydim; idy++){
@@ -161,6 +191,9 @@ function randomize(){
 		}
 }
 
+/*
+	Sets up board on page load
+*/
 function init(){
 	document.getElementById('x').value = 30;
 	document.getElementById('y').value = 30;
