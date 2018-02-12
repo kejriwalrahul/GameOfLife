@@ -7,9 +7,9 @@
 
 	<style type="text/css">
 		.cell{
-			width: 25px;
 			cursor: pointer; 
 			cursor: hand;
+			border: 1px solid black;
 		}
 
 		.live{
@@ -20,46 +20,85 @@
 			display: table;
 			margin: auto;
 		}
-	</style>
 
+		.cell_grid {
+			border: 3px solid black;
+			table-layout: fixed;
+		}
+
+		h1, h3, h4{
+			color: #F5F5F5;
+		}
+
+		body {
+			color: #E8E8E8;
+		}
+	</style>
 </head>
-<body>
-	<div class="col-md-6 col-md-offset-3">
-		<h1>Welcome to the Game Of Life</h1>
-		<br><br>
-		<div class="container col-md-12">
-			<div class="col-md-4">
-				<div class="input-group">
-					<span class="input-group-addon">Width&nbsp; </span>
-					<input class="form-control" type="number" name="x" id="x">
+<body onload="init()">
+	<div class="col-md-4" style="background-color: #606060; height: 100vh">
+		<div style="height: 85vh">
+			<h3 style="margin-bottom: 0">Welcome to</h3>
+			<h1 style="margin-top: 0">Conway's Game Of Life</h1>
+			<hr>
+			<div class="container col-md-12">
+				<div class="row">
+					<h4>1. Instructions:</h4>
+					<ul>
+						<li> Modify grid size using controls below and hit 'Update'.</li>
+						<li> Click on cells to toggle alive (grey) or dead (white) state.</li>
+						<li> Use 'Next' to step 1 time unit in the future or hit 'Play' to cycle through 'Speed' number of iterations per second.</li>
+						<li> Hit 'Stop' to terminate playing.
+					</ul>
 				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="input-group">
-					<span class="input-group-addon">Height</span>
-					<input class="form-control" type="number" name="y" id="y">
+				<div class="row">
+					<h4>2. Grid Configuration:</h4>
+					<div class="col-md-6">
+						<div class="input-group">
+							<span class="input-group-addon">Height&nbsp; </span>
+							<input class="form-control" type="number" name="x" id="x">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="input-group">
+							<span class="input-group-addon">Width</span>
+							<input class="form-control" type="number" name="y" id="y">
+						</div>
+					</div>				
 				</div>
-			</div>
-			<div class="col-md-3">
-				<button class="btn btn-default" onclick="generate()" style="width: 60px">Make</button>
-				<button class="btn btn-default" onclick="updateState()" style="width: 60px">Next</button>
+				<div class="row" style="margin-top: 10px"> 
+					<div class="col-md-8">
+						<button class="btn btn-default" onclick="generate()" style="margin-right: 10px">Update</button>
+						<button class="btn btn-default" onclick="randomize()">Random State</button>
+					</div>
+				</div>
+				<div class="row" style="margin-top: 15px;">
+					<h4>3. Speed Controls:</h4>	
+					<div class="col-md-12">
+						<div class="input-group">
+							<span class="input-group-addon">Speed (iters/sec)</span>
+							<input class="form-control" type="number" id="playspeed">
+						</div>
+					</div>				
+				</div>
+				<div class="row" style="margin-top: 10px;">
+					<div class="col-md-2">
+						<button class="btn btn-default" onclick="updateState()" style="width: 60px">Next</button>
+					</div>				
+					<div class="col-md-2">
+						<button id="play_toggle" class="btn btn-default" onclick="play_toggle()">Play</button>
+					</div>				
+				</div>
 			</div>
 		</div>
-		<br><br><br>
-		<div class="container col-md-12">
-			<div class="col-md-8">
-				<div class="input-group">
-					<span class="input-group-addon">Play Speed(iterations/sec)</span>
-					<input class="form-control" type="number" id="playspeed">
-				</div>
-			</div>
-			<div class="col-md-3">
-				<button class="btn btn-default" onclick="play()" style="width: 60px">Play</button>
-				<button class="btn btn-default" onclick="stop()" style="width: 60px">Stop</button>
-			</div>
-		</div>		
+		<!--
+		<div style="height: 5vh">
+		<hr>				
+			<h4> Rahul Kejriwal </h4>
+		</div> 
+		-->
 	</div>
-	<div class="col-md-12">
+	<div class="col-md-8">
 		<div id="container" class="centerBlock">
 			
 		</div>

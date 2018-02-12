@@ -1,5 +1,7 @@
 var xdim, ydim;
+var cell_width, cell_height;
 var player;
+var playing = false;
 
 function generate(){
 	var x = document.getElementById('x').value;
@@ -7,37 +9,34 @@ function generate(){
 
 	xdim = x;
 	ydim = y;
+	cell_height = 80/xdim;
+	cell_width = 100 / ydim;
 
 	var c = document.getElementById('container');
 	var str = "";
 	var i,j;
 
-	var w = 600/x;
-
-	str += "<br><br><table class='table col-md-12' style=\"width: 600px\">\n";
+	str += "<table class='table col-md-12 cell_grid' style=\"width: 55vw; height: 90vh; margin-top: 5vh;\">\n";
 	for(i=1;i<=x;i++){
 		str += "<tr>\n";
 		for(j=1;j<=y;j++){
-			str += "<td class='cell' id='" + i + "," + j + "' onclick=\"toggle('" + i + "," + j +"')\" style='width:" + w + "px;'>";
-			str += "0";
+			str += "<td class='cell' id='" + i + "," + j + "' onclick=\"toggle('" + i + "," + j +"')\" style='height: 2px; padding:0;'>";
+			str += "";
 			str += "</td>\n";
 		}
 		str += "</tr>\n";
 	}
 	str += "</table>\n";
 	c.innerHTML = str;
-	// console.log(str);
 }
 
 function toggle(x){
 	var cell = document.getElementById(x);
-	if(cell.innerHTML == 1){
+	if(cell.classList.contains('live')){
 		cell.className = "cell";
-		cell.innerHTML = 0;
 	}
 	else{
 		cell.className = "cell live";
-		cell.innerHTML = 1;
 	}
 }
 
@@ -55,7 +54,10 @@ function currentState(){
 		row = [0];
 
 		for(j=1;j<=ydim;j++){
-			row.push(document.getElementById(i + "," + j).innerHTML);
+			if (document.getElementById(i + "," + j).classList.contains('live'))
+				row.push(1);
+			else
+				row.push(0);
 		}
 		row.push(0);
 
@@ -116,7 +118,7 @@ function updateState(){
 			if(currState[i][j] == 1) 	document.getElementById(i + "," + j).className = "cell";
 			if(nextState[i][j] == 1)	document.getElementById(i + "," + j).className = "cell live";
 
-			document.getElementById(i + "," + j).innerHTML = nextState[i][j];
+			// document.getElementById(i + "," + j).innerHTML = nextState[i][j];
 		}
 }
 
@@ -130,4 +132,39 @@ function play(){
 
 function stop(){
 	clearInterval(player);
+}
+
+function play_toggle(){
+	if(playing){
+		playing = false;
+		stop();
+		document.getElementById('play_toggle').innerHTML = 'Play';
+	}
+	else{
+		playing = true;
+		play();
+		document.getElementById('play_toggle').innerHTML = 'Stop';
+	}
+}
+
+function randomize(){
+	for(var idx=1; idx<=xdim; idx++)
+		for(var idy=1; idy<=ydim; idy++){
+			// Toggle randomly
+			if(Math.random() > 0.5){
+				var curr_cell = document.getElementById(idx+","+idy); 
+				if(curr_cell.classList.contains('live'))
+					curr_cell.className = "cell";
+				else
+					curr_cell.className = "cell live";
+			}
+		}
+}
+
+function init(){
+	document.getElementById('x').value = 30;
+	document.getElementById('y').value = 30;
+	document.getElementById('playspeed').value = 5;
+	generate();
+	randomize();	
 }
