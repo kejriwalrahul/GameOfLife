@@ -22,7 +22,7 @@ function generate(){
 	var str = "";
 	var i,j;
 
-	str += "<table class='table col-md-12 cell_grid' style=\"width: 55vw; height: 90vh; margin-top: 5vh;\">\n";
+	str += "<table class='table col-md-12 cell_grid'>\n";
 	for(i=1;i<=x;i++){
 		str += "<tr>\n";
 		for(j=1;j<=y;j++){

@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Game Of Life</title>
+	<meta name="viewport" content="width=device-width" />	
 	<link rel="stylesheet" href="bootstrap.min.css">
 	<script type="text/javascript" src="mechanics.js"></script>
 
@@ -24,6 +25,9 @@
 		.cell_grid {
 			border: 3px solid black;
 			table-layout: fixed;
+			width: 55vw; 
+			height: 90vh; 
+			margin-top: 5vh;
 		}
 
 		h1, h3, h4{
@@ -33,11 +37,50 @@
 		body {
 			color: #E8E8E8;
 		}
+
+		.left_panel {
+			background-color: #606060; 
+			height: 100vh;
+			overflow: scroll;
+		}
+
+		@media (max-width: 770px) {
+			.left_panel{
+				background-color: #606060; 
+				height: inherit !important;
+				padding-top: 10px;
+				padding-bottom: 20px;
+			}
+
+			.cell_grid {
+				width: 80vw; 
+				height: 90vh; 
+				margin-top: 5vh;				
+			}	
+		}
+
+		@media (max-width: 425px) {
+			.cell_grid{
+				width: 90vw; 
+				height: 70vh;
+			}
+
+			.width_group {
+				margin-top: 5px;
+			}
+		}
+
+		@media (max-width: 425px) {
+			.cell_grid{
+				width: 90vw; 
+				height: 60vh;
+			}	
+		}
 	</style>
 </head>
 <body onload="init()">
-	<div class="col-md-4" style="background-color: #606060; height: 100vh">
-		<div style="height: 85vh">
+	<div class="col-md-4 left_panel">
+		<div>
 			<h3 style="margin-bottom: 0">Welcome to</h3>
 			<h1 style="margin-top: 0">Conway's Game Of Life</h1>
 			<hr>
@@ -53,28 +96,28 @@
 				</div>
 				<div class="row">
 					<h4>2. Grid Configuration:</h4>
-					<div class="col-md-6">
+					<div class="col-md-6 col-sm-4">
 						<div class="input-group">
 							<span class="input-group-addon">Height&nbsp; </span>
 							<input class="form-control" type="number" name="x" id="x">
 						</div>
 					</div>
-					<div class="col-md-6">
-						<div class="input-group">
+					<div class="col-md-6 col-sm-4">
+						<div class="input-group width_group">
 							<span class="input-group-addon">Width</span>
 							<input class="form-control" type="number" name="y" id="y">
 						</div>
 					</div>				
 				</div>
 				<div class="row" style="margin-top: 10px"> 
-					<div class="col-md-8">
+					<div class="col-md-8 col-sm-8">
 						<button class="btn btn-default" onclick="generate()" style="margin-right: 10px">Update</button>
 						<button class="btn btn-default" onclick="randomize()">Random State</button>
 					</div>
 				</div>
 				<div class="row" style="margin-top: 15px;">
 					<h4>3. Speed Controls:</h4>	
-					<div class="col-md-12">
+					<div class="col-md-12 col-sm-8">
 						<div class="input-group">
 							<span class="input-group-addon">Speed (iters/sec)</span>
 							<input class="form-control" type="number" id="playspeed">
@@ -82,10 +125,8 @@
 					</div>				
 				</div>
 				<div class="row" style="margin-top: 10px;">
-					<div class="col-md-2">
-						<button class="btn btn-default" onclick="updateState()" style="width: 60px">Next</button>
-					</div>				
-					<div class="col-md-2">
+					<div class="col-md-8 col-sm-8">
+						<button class="btn btn-default" onclick="updateState()" style="width: 60px; margin-right: 10px;">Next</button>
 						<button id="play_toggle" class="btn btn-default" onclick="play_toggle()">Play</button>
 					</div>				
 				</div>
